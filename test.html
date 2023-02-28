@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+  <title>PechaKucha</title>
 <head>
 	<title>PechaKucha</title>
 	<style type="text/css">
@@ -28,8 +29,7 @@
 </head>
 
 <body>
-	<iframe id="pechakucha-iframe"
-			src="https://www.pechakucha.com/presentations/witchcraft-in-south-africa-352"
+	<iframe id="myFrame" src="https://www.pechakucha.com/presentations/witchcraft-in-south-africa-352"
 			frameborder="0"
 			marginheight="0"
 			marginwidth="0"
@@ -38,27 +38,18 @@
 			scrolling="auto">
 	</iframe>
 
-	<script type="text/javascript">
-		// Get the iframe element
-		var iframe = document.getElementById("pechakucha-iframe");
-		// Wait for the iframe to load
-		iframe.onload = function() {
-			// Get the canvas element from the iframe
-			var canvas = iframe.contentWindow.document.createElement("canvas");
-			canvas.width = window.innerWidth;
-			canvas.height = window.innerHeight;
-			iframe.contentWindow.document.body.appendChild(canvas);
-			var ctx = canvas.getContext("2d");
-
-			// Check the color of the center pixel every 100 milliseconds
-			setInterval(function() {
-				var imageData = ctx.getImageData(window.innerWidth / 2, window.innerHeight / 2, 1, 1);
-				var color = imageData.data;
-				if (color[0] === 0 && color[1] === 0 && color[2] === 0) {
-					location.reload();
-				}
-			}, 100);
-		};
+	<script>
+		function refreshPage() {
+			var iframe = document.getElementById('myFrame');
+			var content = iframe.contentWindow.document.body.innerHTML;
+			if (content.includes('Witchcraft in South Africa')) {
+				location.reload();
+			}
+			else {
+				setTimeout(refreshPage, 1000); // wait for 1 second and check again
+			}
+		}
+		setTimeout(refreshPage, 1000); // wait for 1 second and start checking
 	</script>
 </body>
 
