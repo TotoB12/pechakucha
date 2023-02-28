@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>PechaKucha</title>
+	<style type="text/css">
+		html {
+			overflow: auto;
+		}
+		
+		html,
+		body,
+		div,
+		iframe {
+			margin: 0px;
+			padding: 0px;
+			height: 100%;
+			border: none;
+		}
+		
+		iframe {
+			display: block;
+			width: 100%;
+			border: none;
+			overflow-y: auto;
+			overflow-x: hidden;
+		}
+	</style>
+</head>
+
+<body>
+	<iframe id="pechakucha-iframe"
+			src="https://www.pechakucha.com/presentations/witchcraft-in-south-africa-352"
+			frameborder="0"
+			marginheight="0"
+			marginwidth="0"
+			width="100%"
+			height="100%"
+			scrolling="auto">
+	</iframe>
+
+	<script type="text/javascript">
+		// Get the iframe element
+		var iframe = document.getElementById("pechakucha-iframe");
+		// Wait for the iframe to load
+		iframe.onload = function() {
+			// Get the canvas element from the iframe
+			var canvas = iframe.contentWindow.document.createElement("canvas");
+			canvas.width = window.innerWidth;
+			canvas.height = window.innerHeight;
+			iframe.contentWindow.document.body.appendChild(canvas);
+			var ctx = canvas.getContext("2d");
+
+			// Check the color of the center pixel every 100 milliseconds
+			setInterval(function() {
+				var imageData = ctx.getImageData(window.innerWidth / 2, window.innerHeight / 2, 1, 1);
+				var color = imageData.data;
+				if (color[0] === 0 && color[1] === 0 && color[2] === 0) {
+					location.reload();
+				}
+			}, 100);
+		};
+	</script>
+</body>
+
+</html>
